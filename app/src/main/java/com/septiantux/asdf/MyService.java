@@ -15,9 +15,9 @@ public class MyService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        myBroadcaseReceiver = new MyBroadcaseReceiver();
-
         Log.w("Service", "onCreate");
+
+        myBroadcaseReceiver = new MyBroadcaseReceiver();
 
         registerReceiver(
                 myBroadcaseReceiver, new IntentFilter("android.intent.action.SCREEN_OFF")
@@ -35,7 +35,17 @@ public class MyService extends Service {
 
         registerReceiver(
                 myBroadcaseReceiver
+                , new IntentFilter("android.intent.action.QUICKBOOT_POWEROFF")
+        );
+
+        registerReceiver(
+                myBroadcaseReceiver
                 , new IntentFilter("android.intent.action.LOCKED_BOOT_COMPLETE")
+        );
+
+        registerReceiver(
+                myBroadcaseReceiver
+                , new IntentFilter("android.intent.action.BOOT_COMPLETE")
         );
     }
 

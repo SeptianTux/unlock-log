@@ -36,13 +36,16 @@ public class MyBroadcaseReceiver extends BroadcastReceiver {
                 message = "unlock";
                 data.type = 1;
                 break;
+            case "android.intent.action.BOOT_COMPLETE":
             case "android.intent.action.LOCKED_BOOT_COMPLETE":
                 message = "boot";
                 data.type = 2;
                 break;
             case "android.intent.action.ACTION_SHUTDOWN":
+            case "android.intent.action.QUICKBOOT_POWEROFF":
                 message = "shutdown";
                 data.type = 3;
+                toast = false;
                 break;
             default:
                 message = "unknown";
@@ -76,6 +79,7 @@ public class MyBroadcaseReceiver extends BroadcastReceiver {
                     try {
                         Dao dao = db.lockUnlockLogDao();
                         dao.insertAll(data);
+                        Log.w("MyBroadcastReceiver", "write to database");
                     } catch (Exception e) {
                         Log.w("err", e.getMessage());
                     }

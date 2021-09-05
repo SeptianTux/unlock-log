@@ -13,8 +13,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.septiantux.asdf.ui.main.PlaceholderFragment;
 import com.septiantux.asdf.ui.main.ViewModel;
@@ -40,24 +42,41 @@ public class MainActivity extends AppCompatActivity {
         }
 
         fab = findViewById(R.id.fab);
-        if(isMyServiceRunning(MyService.class)) {
-            fab.setImageResource(R.drawable.ic_stop_button);
-        } else {
-            fab.setImageResource(R.drawable.ic_play_button);
-        }
+        fab.setImageResource(
+                isMyServiceRunning(MyService.class) ?
+                R.drawable.ic_stop_button : R.drawable.ic_play_button
+        );
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String message;
+
                 if(isMyServiceRunning(MyService.class)) {
                     serviceStopperHandler();
-                    Snackbar.make(view, "Stopped", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+
+                    if(isMyServiceRunning(MyService.class)) {
+                        message = "Stop service: failed.";
+                    } else {
+                        message = "Stopped";
+                    }
                 } else {
                     serviceStarterHandler();
-                    Snackbar.make(view, "Started", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+
+                    if(isMyServiceRunning(MyService.class)) {
+                        message = "Started";
+                    } else {
+                        message = "Start service: failed.";
+                    }
                 }
+
+                Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+                fab.setImageResource(
+                        isMyServiceRunning(MyService.class) ?
+                                R.drawable.ic_stop_button : R.drawable.ic_play_button
+                );
             }
         });
 
@@ -69,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         viewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(ViewModel.class);
                         viewModel.deleteAll();
+
+                        Toast.makeText(context, "Ok", Toast.LENGTH_LONG).show();
+
                         return false;
                     }
                 }
@@ -77,18 +99,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void serviceStarterHandler()
     {
-        getApplicationContext().startService(new Intent(getApplicationContext()
-                , MyService.class));
-
-        fab.setImageResource(R.drawable.ic_stop_button);
+        try {
+            context.startService(new Intent(context, MyService.class));
+        } catch (Exception e) {
+            Log.w("MainActivity", e.getMessage());
+        }
     }
 
     public void serviceStopperHandler()
     {
-        getApplicationContext().stopService(new Intent(getApplicationContext()
-                , MyService.class));
-
-        fab.setImageResource(R.drawable.ic_play_button);
+        try {
+            context.stopService(new Intent(context, MyService.class));
+        } catch (Exception e) {
+            Log.w("MainActivity", e.getMessage());
+        }
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
