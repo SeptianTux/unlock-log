@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Asdf</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+
+    <string name="info_text">Info text</string>
+
+    <string name="null_text">NULL text</string>
+
+    <string name="app_bar_action_delete">Delete</string>
+</resources>

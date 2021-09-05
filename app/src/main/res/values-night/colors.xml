@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1C1C1C</color>
+    <color name="colorPrimaryDark">#141414</color>
+    <color name="colorAccent">#0F0F0F</color>
+
+    <color name="backgroundColor">#262626</color>
+    <color name="textColor">#efefef</color>
+
+    <color name="timelineRowBackground">#efefef</color>
+    <color name="timelineRowBackgroundSelected">#36eab6</color>
+    <color name="timelineRowBellowLineColor">#efefef</color>
+
+    <color name="cardBg">#333333</color>
+    <color name="cardImageBg">#B5B5B5</color>
+</resources>
