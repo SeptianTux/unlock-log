@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.github.curioustechizen.ago.RelativeTimeTextView;
 import com.septiantux.asdf.R;
 
 import java.util.List;
@@ -29,7 +30,8 @@ public class LogDataAdapter extends RecyclerView.Adapter<LogDataAdapter.MyViewHo
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView icon;
-        public TextView textHeader, textFooterLeft, textFooterRight;
+        public TextView textHeader, textFooterLeft;
+        RelativeTimeTextView textFooterRight;
         public View view;
 
         public MyViewHolder(View v) {
@@ -40,7 +42,7 @@ public class LogDataAdapter extends RecyclerView.Adapter<LogDataAdapter.MyViewHo
             icon = view.findViewById(R.id.cardViewIcon);
             textHeader = view.findViewById(R.id.cardViewTextHeader);
             textFooterLeft = view.findViewById(R.id.cardViewFooterLeft);
-            textFooterRight = view.findViewById(R.id.cardViewFooterRitght);
+            textFooterRight = (RelativeTimeTextView)view.findViewById(R.id.cardViewFooterRitght);
         }
 
         public void bind(final LogData item, final OnItemClickListener listener) {
@@ -73,7 +75,7 @@ public class LogDataAdapter extends RecyclerView.Adapter<LogDataAdapter.MyViewHo
         LogData logData = logDataList.get(position);
         holder.textHeader.setText(logData.getTypeString());
         holder.textFooterLeft.setText(logData.getDate());
-        holder.textFooterRight.setText(String.valueOf(logData.getTimestamp()));
+        holder.textFooterRight.setReferenceTime(logData.getTimestamp()*1000);
 
         Glide.with(mContext).load(logData.getIcon()).into(holder.icon);
 

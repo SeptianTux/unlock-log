@@ -100,7 +100,7 @@ public class PlaceholderFragment extends Fragment {
                         case 1  : ic = R.drawable.ic_unlock; break;
                         case 2  : ic = R.drawable.ic_switch_on; break;
                         case 3  : ic = R.drawable.ic_switch_off; break;
-                        default : ic = R.drawable.circle_shape;
+                        default : ic = R.drawable.ic_unlock;
                     }
 
                     Log.w("PlaceholderFragment", String.valueOf(data.get(i).timestamp));
