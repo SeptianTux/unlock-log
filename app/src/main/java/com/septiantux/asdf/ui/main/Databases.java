@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
 
 @Database(entities = {Data.class}, version = 1)
 public abstract class Databases extends RoomDatabase {
-    public abstract Dao lockUnlockLogDao();
+    public abstract DataDao dataDao();
 
     private static volatile Databases INSTANCE;
     private static final int NUMBER_OF_THREADS = 2;

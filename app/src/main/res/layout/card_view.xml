@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     android:paddingLeft="15dp"
     android:paddingEnd="15dp"
-    android:clickable="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
@@ -13,10 +12,10 @@
         android:minHeight="100dp"
         android:padding="10dp"
         app:cardCornerRadius="3dp"
-        app:cardElevation="5dp"
-        android:clickable="true" >
+        app:cardElevation="5dp" >
 
         <LinearLayout
+            android:id="@+id/cardViewBg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/cardImageBg"

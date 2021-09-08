@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".MyBroadcaseReceiver">
+        <receiver android:name=".MyBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.SCREEN_OFF" />
 

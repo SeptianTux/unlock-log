@@ -13,14 +13,16 @@ public class LogData {
     private int type;
     private String date;
     private int icon;
+    private boolean mark;
 
     public LogData() {
     }
 
-    public LogData(int id, int timestamp, int type) {
+    public LogData(int id, int timestamp, int type, boolean mark) {
         this.id = id;
         this.timestamp = timestamp;
         this.type = type;
+        this.mark = mark;
     }
 
     public int getId() {
@@ -79,5 +81,13 @@ public class LogData {
 
     public int getIcon() {
         return this.icon;
+    }
+
+    public void setMark(boolean m) {
+        this.mark = m;
+    }
+
+    public boolean getMark() {
+        return this.mark;
     }
 }

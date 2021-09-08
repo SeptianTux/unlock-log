@@ -45,11 +45,8 @@ public class PlaceholderFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-
         root = inflater.inflate(R.layout.fragment_main, container, false);
         recyclerView = root.findViewById(R.id.recycler_view);
-
-
         viewModel = ViewModelProviders.of(this)
                 .get(ViewModel.class);
 
@@ -60,30 +57,27 @@ public class PlaceholderFragment extends Fragment {
                         , true)
         );
 
-
-
         final Observer<List<Data>> listObserver = new Observer<List<Data>>() {
             @SuppressLint({"SimpleDateFormat", "ResourceType"})
             @Override
             public void onChanged(@Nullable final List<Data> data) {
                 logDataList = new ArrayList<>();
-
                 logDataAdapter = new LogDataAdapter(
                                                 root.getContext()
                                                 , logDataList
                                                 , new LogDataAdapter.OnItemClickListener() {
                                                     @Override
                                                     public void onItemClick(LogData item) {
-                                                        Log.w("test", "dan test lagi");
+                                                        viewModel.mark(
+                                                                item.getId(), !item.getMark()
+                                                        );
                                                     }
                                                 }
                                         );
-
                 mLayoutManager = new GridLayoutManager(root.getContext(), 1);
 
 
                 recyclerView.setLayoutManager(mLayoutManager);
-
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 //recyclerView.setAdapter(logDataAdapter);
                 recyclerView.setAdapter(logDataAdapter);
@@ -94,6 +88,7 @@ public class PlaceholderFragment extends Fragment {
                     logData.setId(data.get(i).id);
                     logData.setTimestamp(data.get(i).timestamp);
                     logData.setType(data.get(i).type);
+                    logData.setMark(data.get(i).mark);
 
                     switch (data.get(i).type) {
                         case 0  : ic = R.drawable.ic_lock; break;

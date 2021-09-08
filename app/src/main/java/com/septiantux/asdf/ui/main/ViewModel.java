@@ -1,6 +1,5 @@
 package com.septiantux.asdf.ui.main;
 
-
 import android.app.Application;
 
 import androidx.annotation.NonNull;
@@ -10,28 +9,28 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class ViewModel extends AndroidViewModel {
-    private Dao mDao;
+    private DataDao mDataDao;
 
     public ViewModel(@NonNull Application application) {
         super(application);
 
         Databases db = Databases.getDatabase(application);
-        mDao = db.lockUnlockLogDao();
+        mDataDao = db.dataDao();
     }
 
     public LiveData<List<Data>> getAllLog() {
-        return mDao.getAll();
+        return mDataDao.getAll();
     }
 
     public LiveData<Integer> count() {
-        return mDao.count();
+        return mDataDao.count();
     }
 
     public void insert(final Data data) {
         Thread t = new Thread(new Runnable(){
             @Override
             public void run() {
-                mDao.insertAll(data);
+                mDataDao.insertAll(data);
             }
         });
         t.start();
@@ -41,7 +40,17 @@ public class ViewModel extends AndroidViewModel {
         Thread t = new Thread(new Runnable(){
             @Override
             public void run() {
-                mDao.deleteAll();
+                mDataDao.deleteAll();
+            }
+        });
+        t.start();
+    }
+
+    public void mark(final int id, final boolean mark) {
+        Thread t = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                mDataDao.mark(id, mark);
             }
         });
         t.start();

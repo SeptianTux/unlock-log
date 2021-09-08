@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "Data")
 public class Data {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -19,5 +19,8 @@ public class Data {
     // 3    = shutdown
     @ColumnInfo(name = "type")
     public int type;
+
+    @ColumnInfo(name = "mark")
+    public boolean mark;
 }
 

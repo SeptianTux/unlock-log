@@ -26,16 +26,16 @@ import java.util.Set;
 
 @SuppressWarnings({"unchecked", "deprecation"})
 public final class Databases_Impl extends Databases {
-  private volatile Dao _dao;
+  private volatile DataDao _dataDao;
 
   @Override
   protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration configuration) {
     final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(1) {
       @Override
       public void createAllTables(SupportSQLiteDatabase _db) {
-        _db.execSQL("CREATE TABLE IF NOT EXISTS `Data` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `timestamp` INTEGER NOT NULL, `type` INTEGER NOT NULL)");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `Data` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `timestamp` INTEGER NOT NULL, `type` INTEGER NOT NULL, `mark` INTEGER NOT NULL)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '256a2f6b77609b90fd7b817c9e8d004b')");
+        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c31229cb7d33e7b7ad1214f8a291626e')");
       }
 
       @Override
@@ -79,10 +79,11 @@ public final class Databases_Impl extends Databases {
 
       @Override
       protected RoomOpenHelper.ValidationResult onValidateSchema(SupportSQLiteDatabase _db) {
-        final HashMap<String, TableInfo.Column> _columnsData = new HashMap<String, TableInfo.Column>(3);
+        final HashMap<String, TableInfo.Column> _columnsData = new HashMap<String, TableInfo.Column>(4);
         _columnsData.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsData.put("timestamp", new TableInfo.Column("timestamp", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsData.put("type", new TableInfo.Column("type", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsData.put("mark", new TableInfo.Column("mark", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysData = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesData = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoData = new TableInfo("Data", _columnsData, _foreignKeysData, _indicesData);
@@ -94,7 +95,7 @@ public final class Databases_Impl extends Databases {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "256a2f6b77609b90fd7b817c9e8d004b", "d15b82ea340d0e901f304a495e3d67c4");
+    }, "c31229cb7d33e7b7ad1214f8a291626e", "8e14bd6e058f7fb98147d3cdbdc2b3d9");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(configuration.context)
         .name(configuration.name)
         .callback(_openCallback)
@@ -130,20 +131,20 @@ public final class Databases_Impl extends Databases {
   @Override
   protected Map<Class<?>, List<Class<?>>> getRequiredTypeConverters() {
     final HashMap<Class<?>, List<Class<?>>> _typeConvertersMap = new HashMap<Class<?>, List<Class<?>>>();
-    _typeConvertersMap.put(Dao.class, Dao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(DataDao.class, DataDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
   @Override
-  public Dao lockUnlockLogDao() {
-    if (_dao != null) {
-      return _dao;
+  public DataDao dataDao() {
+    if (_dataDao != null) {
+      return _dataDao;
     } else {
       synchronized(this) {
-        if(_dao == null) {
-          _dao = new Dao_Impl(this);
+        if(_dataDao == null) {
+          _dataDao = new DataDao_Impl(this);
         }
-        return _dao;
+        return _dataDao;
       }
     }
   }

@@ -37,7 +37,7 @@ public class LogDataAdapter extends RecyclerView.Adapter<LogDataAdapter.MyViewHo
         public MyViewHolder(View v) {
             super(v);
 
-            this.view = v;
+            view = v;
 
             icon = view.findViewById(R.id.cardViewIcon);
             textHeader = view.findViewById(R.id.cardViewTextHeader);
@@ -46,7 +46,7 @@ public class LogDataAdapter extends RecyclerView.Adapter<LogDataAdapter.MyViewHo
         }
 
         public void bind(final LogData item, final OnItemClickListener listener) {
-            this.view.setOnClickListener(new View.OnClickListener() {
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     listener.onItemClick(item);
                 }
@@ -73,9 +73,16 @@ public class LogDataAdapter extends RecyclerView.Adapter<LogDataAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         LogData logData = logDataList.get(position);
+
         holder.textHeader.setText(logData.getTypeString());
         holder.textFooterLeft.setText(logData.getDate());
         holder.textFooterRight.setReferenceTime(logData.getTimestamp()*1000);
+
+        if(logData.getMark()) {
+            View cardBg;
+            cardBg = holder.view.findViewById(R.id.cardViewBg);
+            cardBg.setBackgroundResource(R.color.cardBgMarked);
+        }
 
         Glide.with(mContext).load(logData.getIcon()).into(holder.icon);
 
@@ -85,7 +92,6 @@ public class LogDataAdapter extends RecyclerView.Adapter<LogDataAdapter.MyViewHo
 
 
     public static class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
-
         private int spanCount;
         private int spacing;
         private boolean includeEdge;

@@ -8,8 +8,12 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+/*
+    Selain AOSP ROM mungkin ada penghemat baterai atau pembatasan aplikasi yang berjalan di
+    latar belakang, pastikan itu tidak menghentikan service ini.
+ */
 public class MyService extends Service {
-    private MyBroadcaseReceiver myBroadcaseReceiver;
+    private MyBroadcastReceiver myBroadcastReceiver;
 
     @Override
     public void onCreate() {
@@ -17,34 +21,34 @@ public class MyService extends Service {
 
         Log.w("Service", "onCreate");
 
-        myBroadcaseReceiver = new MyBroadcaseReceiver();
+        myBroadcastReceiver = new MyBroadcastReceiver();
 
         registerReceiver(
-                myBroadcaseReceiver, new IntentFilter("android.intent.action.SCREEN_OFF")
+                myBroadcastReceiver, new IntentFilter("android.intent.action.SCREEN_OFF")
         );
 
         registerReceiver(
-                myBroadcaseReceiver
+                myBroadcastReceiver
                 , new IntentFilter("android.intent.action.USER_PRESENT")
         );
 
         registerReceiver(
-                myBroadcaseReceiver
+                myBroadcastReceiver
                 , new IntentFilter("android.intent.action.ACTION_SHUTDOWN")
         );
 
         registerReceiver(
-                myBroadcaseReceiver
+                myBroadcastReceiver
                 , new IntentFilter("android.intent.action.QUICKBOOT_POWEROFF")
         );
 
         registerReceiver(
-                myBroadcaseReceiver
+                myBroadcastReceiver
                 , new IntentFilter("android.intent.action.LOCKED_BOOT_COMPLETE")
         );
 
         registerReceiver(
-                myBroadcaseReceiver
+                myBroadcastReceiver
                 , new IntentFilter("android.intent.action.BOOT_COMPLETE")
         );
     }
@@ -58,6 +62,6 @@ public class MyService extends Service {
     @Override
     public void onDestroy() {
         Log.w("Service", "onDestroy");
-        unregisterReceiver(myBroadcaseReceiver);
+        unregisterReceiver(myBroadcastReceiver);
     }
 }
