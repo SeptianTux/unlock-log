@@ -12,6 +12,6 @@
     <color name="timelineRowBellowLineColor">#efefef</color>
 
     <color name="cardBg">#333333</color>
-    <color name="cardBgMarked">#662e7d32</color>
+    <color name="cardImageBgMarked">#662e7d32</color>
     <color name="cardImageBg">#B5B5B5</color>
 </resources>

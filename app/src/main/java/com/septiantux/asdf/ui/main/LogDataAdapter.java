@@ -24,7 +24,7 @@ public class LogDataAdapter extends RecyclerView.Adapter<LogDataAdapter.MyViewHo
     private OnItemClickListener listener;
 
     public interface OnItemClickListener {
-        void onItemClick(LogData item);
+        void onItemClick(View view, LogData item);
     }
 
 
@@ -48,7 +48,7 @@ public class LogDataAdapter extends RecyclerView.Adapter<LogDataAdapter.MyViewHo
         public void bind(final LogData item, final OnItemClickListener listener) {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    listener.onItemClick(item);
+                    listener.onItemClick(view, item);
                 }
             });
         }
@@ -81,7 +81,7 @@ public class LogDataAdapter extends RecyclerView.Adapter<LogDataAdapter.MyViewHo
         if(logData.getMark()) {
             View cardBg;
             cardBg = holder.view.findViewById(R.id.cardViewBg);
-            cardBg.setBackgroundResource(R.color.cardBgMarked);
+            cardBg.setBackgroundResource(R.color.cardImageBgMarked);
         }
 
         Glide.with(mContext).load(logData.getIcon()).into(holder.icon);

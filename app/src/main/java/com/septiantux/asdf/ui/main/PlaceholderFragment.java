@@ -34,9 +34,42 @@ public class PlaceholderFragment extends Fragment {
 
     private RecyclerView recyclerView;
 
+    private class MarkDataObject {
+        private ArrayList<Integer> id;
+        private ArrayList<Boolean> mark;
+        private ArrayList<Boolean> dbMarkValue;
+
+        MarkDataObject() {
+            this.id = new ArrayList<>();
+            this.mark = new ArrayList<>();
+            this.dbMarkValue = new ArrayList<>();
+        }
+
+        public void markUnmark(LogData logData) {
+            int index = -1;
+
+            index=this.id.indexOf(logData.getId());
+            if(index >= 0) {
+                this.mark.set(index, !this.mark.get(index));
+            } else {
+                this.id.add(logData.getId());
+                this.mark.add(!logData.getMark());
+                this.dbMarkValue.add(logData.getMark());
+            }
+        }
+
+        public boolean getLastMark() {
+            return mark.get(mark.size()-1);
+        }
+    }
+
+    private MarkDataObject markDataObject;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        markDataObject = new MarkDataObject();
 
     }
 
@@ -50,6 +83,10 @@ public class PlaceholderFragment extends Fragment {
         viewModel = ViewModelProviders.of(this)
                 .get(ViewModel.class);
 
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(40);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         recyclerView.addItemDecoration(
                 new LogDataAdapter.GridSpacingItemDecoration(
                         1
@@ -62,18 +99,30 @@ public class PlaceholderFragment extends Fragment {
             @Override
             public void onChanged(@Nullable final List<Data> data) {
                 logDataList = new ArrayList<>();
+
                 logDataAdapter = new LogDataAdapter(
                                                 root.getContext()
                                                 , logDataList
                                                 , new LogDataAdapter.OnItemClickListener() {
                                                     @Override
-                                                    public void onItemClick(LogData item) {
-                                                        viewModel.mark(
-                                                                item.getId(), !item.getMark()
+                                                    public void onItemClick(View view, LogData logData) {
+                                                        View c = view.findViewById(R.id.cardViewBg);
+
+                                                        markDataObject.markUnmark(logData);
+
+                                                        c.setBackgroundResource(
+                                                                markDataObject.getLastMark()
+                                                                ?
+                                                                        R.color.cardImageBgMarked
+                                                                        :
+                                                                        R.color.cardImageBg
                                                         );
                                                     }
                                                 }
                                         );
+                //logDataAdapter.notifyItemRangeInserted(rangeStart, rangeEnd);
+
+
                 mLayoutManager = new GridLayoutManager(root.getContext(), 1);
 
 
@@ -102,11 +151,15 @@ public class PlaceholderFragment extends Fragment {
 
                     logData.setIcon(ic);
                     logDataList.add(logData);
+
+                    logDataAdapter.notifyItemRemoved(i);
+                    logDataAdapter.notifyItemChanged(i);
+                    logDataAdapter.notifyItemInserted(i);
                 }
 
                 Log.w("PlaceholderFragment", String.valueOf(logDataList.size()));
 
-                logDataAdapter.notifyDataSetChanged();
+                //logDataAdapter.notifyDataSetChanged();
 
             }
         };
@@ -118,6 +171,13 @@ public class PlaceholderFragment extends Fragment {
 
     @Override
     public void onDestroy() {
+        int size = -1;
+        size = markDataObject.id.size();
+
+        for(int i=0; i<size; i++) {
+            viewModel.mark(markDataObject.id.get(i), markDataObject.mark.get(i));
+        }
+
         super.onDestroy();
     }
 

@@ -1,6 +1,7 @@
 package com.septiantux.asdf.ui.main;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.room.Database;
 import androidx.room.Room;
@@ -14,10 +15,9 @@ public abstract class Databases extends RoomDatabase {
     public abstract DataDao dataDao();
 
     private static volatile Databases INSTANCE;
-    private static final int NUMBER_OF_THREADS = 2;
+    private static final int NUMBER_OF_THREADS = Runtime.getRuntime().availableProcessors();
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-
 
     public static Databases getDatabase(final Context context) {
         if (INSTANCE == null) {
@@ -29,6 +29,7 @@ public abstract class Databases extends RoomDatabase {
                 }
             }
         }
+
         return INSTANCE;
     }
 

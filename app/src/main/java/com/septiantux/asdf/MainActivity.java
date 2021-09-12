@@ -26,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private Activity activity;
 
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                         viewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(ViewModel.class);
                         viewModel.deleteAll();
 
-                        Toast.makeText(context, "Ok", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Delete : Ok", Toast.LENGTH_LONG).show();
 
                         return false;
                     }
