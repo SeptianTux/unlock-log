@@ -58,8 +58,8 @@ public class PlaceholderFragment extends Fragment {
             }
         }
 
-        public boolean getLastMark() {
-            return mark.get(mark.size()-1);
+        public boolean getMarkById(int id) {
+            return this.mark.get(this.id.indexOf(id));
         }
     }
 
@@ -111,7 +111,7 @@ public class PlaceholderFragment extends Fragment {
                                                         markDataObject.markUnmark(logData);
 
                                                         c.setBackgroundResource(
-                                                                markDataObject.getLastMark()
+                                                                markDataObject.getMarkById(logData.getId())
                                                                 ?
                                                                         R.color.cardImageBgMarked
                                                                         :
