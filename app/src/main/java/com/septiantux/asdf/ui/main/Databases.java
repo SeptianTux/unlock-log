@@ -1,7 +1,6 @@
 package com.septiantux.asdf.ui.main;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.room.Database;
 import androidx.room.Room;
@@ -32,21 +31,4 @@ public abstract class Databases extends RoomDatabase {
 
         return INSTANCE;
     }
-
-    /*
-    public static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-
-            databaseWriteExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    LockUnlockLogDao dao = INSTANCE.lockUnlockLogDao();
-                    dao.deleteAll();
-                }
-            });
-        }
-    };
-     */
 }

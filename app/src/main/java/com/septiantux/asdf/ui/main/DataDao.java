@@ -12,9 +12,6 @@ public interface DataDao {
     @Query("SELECT * FROM Data ORDER BY id DESC")
     LiveData<List<Data>> getAll();
 
-    @Query("SELECT COUNT(timestamp) FROM Data")
-    LiveData<Integer> count();
-
     @Insert
     void insertAll(Data... data);
 

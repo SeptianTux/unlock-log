@@ -9,7 +9,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 /*
-    Selain AOSP ROM mungkin ada penghemat baterai atau pembatasan aplikasi yang berjalan di
+    Mungkin ada penghemat baterai atau pembatasan aplikasi yang berjalan di
     latar belakang, pastikan itu tidak menghentikan service ini.
  */
 public class MyService extends Service {
@@ -18,8 +18,6 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        Log.w("Service", "onCreate");
 
         myBroadcastReceiver = new MyBroadcastReceiver();
 
@@ -34,22 +32,22 @@ public class MyService extends Service {
 
         registerReceiver(
                 myBroadcastReceiver
+                , new IntentFilter("android.intent.action.BOOT_COMPLETED")
+        );
+
+        registerReceiver(
+                myBroadcastReceiver
+                , new IntentFilter("android.intent.action.LOCKED_BOOT_COMPLETED")
+        );
+
+        registerReceiver(
+                myBroadcastReceiver
                 , new IntentFilter("android.intent.action.ACTION_SHUTDOWN")
         );
 
         registerReceiver(
                 myBroadcastReceiver
                 , new IntentFilter("android.intent.action.QUICKBOOT_POWEROFF")
-        );
-
-        registerReceiver(
-                myBroadcastReceiver
-                , new IntentFilter("android.intent.action.LOCKED_BOOT_COMPLETE")
-        );
-
-        registerReceiver(
-                myBroadcastReceiver
-                , new IntentFilter("android.intent.action.BOOT_COMPLETE")
         );
     }
 

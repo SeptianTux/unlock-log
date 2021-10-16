@@ -7,18 +7,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class LogData {
+public class DataLog {
     private int id;
     private long timestamp;
     private int type;
-    private String date;
     private int icon;
     private boolean mark;
 
-    public LogData() {
+    public DataLog() {
     }
 
-    public LogData(int id, int timestamp, int type, boolean mark) {
+    public DataLog(int id, int timestamp, int type, boolean mark) {
         this.id = id;
         this.timestamp = timestamp;
         this.type = type;
@@ -39,10 +38,6 @@ public class LogData {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public int getType() {
-        return this.type;
     }
 
     public String getTypeString() {

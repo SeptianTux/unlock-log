@@ -7,11 +7,8 @@
     <color name="backgroundColor">#fafafa</color>
     <color name="textColor">#000000</color>
 
-    <color name="timelineRowBackground">#2B2B2B</color>
-    <color name="timelineRowBackgroundSelected">#4BBD84</color>
-    <color name="timelineRowBellowLineColor">#BF2B2B2B</color>
-
-    <color name="cardBg">#DBDBDB</color>
-    <color name="cardImageBgMarked">#664CAF50</color>
-    <color name="cardImageBg">#B5B5B5</color>
+    <color name="cardBg">#ECECEC</color>
+    <color name="cardImageBgMarked">#BAE2BB</color>
+    <color name="cardImageBg">#DBDBDB</color>
+    <color name="cardStrokeColor">#FF0000</color>
 </resources>

@@ -22,20 +22,6 @@ public class ViewModel extends AndroidViewModel {
         return mDataDao.getAll();
     }
 
-    public LiveData<Integer> count() {
-        return mDataDao.count();
-    }
-
-    public void insert(final Data data) {
-        Thread t = new Thread(new Runnable(){
-            @Override
-            public void run() {
-                mDataDao.insertAll(data);
-            }
-        });
-        t.start();
-    }
-
     public void deleteAll() {
         Thread t = new Thread(new Runnable(){
             @Override

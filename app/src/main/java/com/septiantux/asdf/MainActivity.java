@@ -21,12 +21,16 @@ import android.widget.Toast;
 import com.septiantux.asdf.ui.main.PlaceholderFragment;
 import com.septiantux.asdf.ui.main.ViewModel;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Context context;
     private Activity activity;
 
-    protected void onSaveInstanceState(Bundle savedInstanceState) {
+    protected void onSaveInstanceState(@NotNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -101,21 +105,19 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    public void serviceStarterHandler()
-    {
+    public void serviceStarterHandler() {
         try {
             context.startService(new Intent(context, MyService.class));
         } catch (Exception e) {
-            Log.w("MainActivity", e.getMessage());
+            Log.w("MainActivity", Objects.requireNonNull(e.getMessage()));
         }
     }
 
-    public void serviceStopperHandler()
-    {
+    public void serviceStopperHandler() {
         try {
             context.stopService(new Intent(context, MyService.class));
         } catch (Exception e) {
-            Log.w("MainActivity", e.getMessage());
+            Log.w("MainActivity", Objects.requireNonNull(e.getMessage()));
         }
     }
 

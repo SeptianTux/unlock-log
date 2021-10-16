@@ -23,4 +23,3 @@ public class Data {
     @ColumnInfo(name = "mark")
     public boolean mark;
 }
-

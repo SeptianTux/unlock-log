@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="15dp"
-    android:paddingEnd="15dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:backgroundTint="@color/backgroundColor"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:minHeight="100dp"
         android:padding="10dp"
+        app:cardBackgroundColor="@color/cardBg"
         app:cardCornerRadius="3dp"
-        app:cardElevation="5dp" >
+        app:cardElevation="0dp"
+        app:strokeColor="@color/cardStrokeColor"
+        app:strokeWidth="2dp">
 
         <LinearLayout
             android:id="@+id/cardViewBg"
